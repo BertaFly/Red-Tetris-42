@@ -1,21 +1,27 @@
-import React from "react";
-import ReactDOM from "react-dom";
-import { createStore, applyMiddleware } from 'redux';
+import * as React from 'react';
+import * as ReactDOM from 'react-dom'
 import { Provider } from 'react-redux';
+import { applyMiddleware, createStore } from 'redux';
 import { StoreContext } from 'redux-react-hook';
-
+import { App } from '@src/client/component/app';
+import { onAll } from '@src/client/socket-handler';
 import { reducer } from '@src/client/redux/reducer';
 import { socketMiddleware } from '@src/client/redux/socketMiddleware';
+import './style.scss';
 
-import App from "./components/App";
+const store = createStore(
+  reducer,
+  applyMiddleware(
+    socketMiddleware,
+  ),
+);
 
-import "./css/main.scss";
-
-const store = createStore(reducer, applyMiddleware(socketMiddleware))
+onAll(store)();
 
 ReactDOM.render(
   <Provider store={store}>
     <StoreContext.Provider value={store}>
       <App />
     </StoreContext.Provider>
-  </Provider>, document.getElementById("root"));
+  </Provider>
+  , document.getElementById('app'));

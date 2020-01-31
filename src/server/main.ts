@@ -1,19 +1,18 @@
-import express from "express";
+import * as express from 'express';
+import { Server } from 'http';
 import { Socket } from 'socket.io';
-import { Server } from "http";
-
-import handleClient from "./handleClient"
+import { handleClient } from '@src/server/client';
 
 const app = express();
 
-app.use(express.static("build"));
+app.use(express.static('build'));
 
 const server = new Server(app);
 
-const io = require("socket.io")(server);
+const io = require('socket.io')(server);
 
-io.on("connection", (socket: Socket) => handleClient(socket));
+io.on('connection', (s: Socket) => handleClient(s));
 
-server.listen(8080, () => {
-  console.log("listen to port 8080");
+server.listen(8000, () => {
+  console.log('Server on port : 8000');
 });

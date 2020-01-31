@@ -1,32 +1,80 @@
-import io from 'socket.io-client';
+import * as io from 'socket.io-client';
 
-import { EnumAction } from './actions/actions-creators'
+import { IRoomPlayersName, IRoomStateClient } from '@src/common/socketEventClient';
 
-const SOCKET_URL = 'http://localhost:8080';
+import { EnumAction, ReduxAction } from './actions/action-creators';
 
-const socket: SocketIOClient.Socket = io(SOCKET_URL);
+const SOCKET_URL = 'http://localhost:8000';
+interface IDataState {
+  readonly socket: SocketIOClient.Socket,
+  readonly playerName: string | undefined,
+  readonly roomName: string | undefined,
 
-const initialState = {
-  socket: socket,
-  playerName: undefined,
-  roomName: undefined,
-  roomsPlayersName: [],
+  readonly roomState: IRoomStateClient | undefined,
+  readonly roomsPlayersName: IRoomPlayersName[],
+  readonly errorMsg: string | undefined,
 }
 
-const reducer = (state = initialState, action: any): any => {
+const initApp = (): IDataState => {
+  const socket: SocketIOClient.Socket = io(SOCKET_URL);
+
+  console.log("Init Reducer");
+
+  return {
+    socket: socket,
+    playerName: undefined,
+    roomName: undefined,
+    roomState: undefined,
+    roomsPlayersName: [],
+    errorMsg: undefined,
+  };
+};
+
+const reducer = (state = initApp(), action: ReduxAction): IDataState => {
   switch (action.type) {
+    case EnumAction.ON_SET_ROOM_STATE:
+      return {
+        ...state,
+        roomState: action.arg.room,
+      };
+    case EnumAction.ON_SET_ROOMS_PLAYERS_NAME:
+      return {
+        ...state,
+        roomsPlayersName: action.arg.roomsPlayersName,
+      };
+    case EnumAction.ON_SET_ERROR:
+      return {
+        ...state,
+        errorMsg: action.arg.msg,
+        playerName: undefined,
+        roomName: undefined,
+      };
+    case EnumAction.ON_CLEAR_ERROR:
+      return {
+        ...state,
+        errorMsg: undefined,
+      }
+    case EnumAction.REFRESH:
+      return { ...state };
+    case EnumAction.SEND_QUIT_ROOM:
+      return {
+        ...state,
+        playerName: undefined,
+        roomName: undefined,
+      };
     case EnumAction.SEND_JOIN_ROOM:
-    console.log(`JOIN_ROOM { who: ${action.playerName}, room: ${action.roomName}`)
       return {
         ...state,
         playerName: action.playerName,
         roomName: action.roomName,
-      }
+      };
     default:
       return state;
   }
 }
 
 export {
-  reducer
-}
+  reducer,
+  EnumAction,
+  IDataState,
+};

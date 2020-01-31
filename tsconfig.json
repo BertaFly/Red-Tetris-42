@@ -8,12 +8,13 @@
         "src/*"
       ]
       // will enable -> import { ... } from '@src/components'
+      // in webpack you need to add -> resolve: { alias: { '@src': PATH_TO_SRC } }
     },
-    "outDir": "./build",
+    "outDir": "dist/",
     // target for compiled files
     "allowSyntheticDefaultImports": true,
     // no errors with commonjs modules interop
-    "esModuleInterop": true,
+    // "esModuleInterop": true,
     "allowJs": true,
     // include js files
     "checkJs": true,
@@ -52,6 +53,7 @@
   },
   "include": [
     "src/**/*"
+    // to change
   ],
   "exclude": [
     "node_modules",
