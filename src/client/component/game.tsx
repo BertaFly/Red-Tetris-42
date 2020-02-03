@@ -11,6 +11,7 @@ import { placePiece, ENUM_PIECES_MOVE, ENUM_PIECES, placePiecePreview } from '@s
 
 import { Modal } from './Modal'
 import { Opponents } from './Opponents';
+import { FireWorks } from './Fireworks';
 import { IPlayerClient } from '@src/common/socketEventClient';
 
 const mp3 = require('@src/client/assets/Original_Tetris_theme.mp3');
@@ -264,6 +265,9 @@ export const Game = () => {
           <p>Lines completed: {player.nbLineCompleted}</p>
         </>)}
       </Modal>
+
+      {endGameModal && player.win ? <FireWorks /> : null}
+
     </div>
   )
 };

@@ -235,9 +235,14 @@ const moveCollision = (
 
 const gridDelLine = (grid: ENUM_PIECES[][]): { grid: ENUM_PIECES[][], nbLineToAdd: number } => {
   let calcLines = 0
+  let wallToDell = 0
   let newGrid = grid.map(line => {
     if (line.every(x => x !== ENUM_PIECES.empty && x !== ENUM_PIECES.wall)) {
       calcLines += 1
+      wallToDell += 1
+      return undefined
+    } else if (line.every(x => x === ENUM_PIECES.wall) && wallToDell) {
+      wallToDell -= 1
       return undefined
     }
     return line
