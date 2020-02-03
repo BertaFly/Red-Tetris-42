@@ -1,13 +1,13 @@
 import * as React from 'react';
 import { useCallback, useEffect, useState } from 'react';
 
-import { useHistory, useParams } from 'react-router-dom';
+import { useHistory, useParams, Link } from 'react-router-dom';
 import { useDispatch, useMappedState } from 'redux-react-hook';
 
-import { SEND_QUIT_ROOM, SEND_START_GAME, SEND_MOVE_PIECE, SEND_JOIN_ROOM, ON_CLEAR_ERROR } from '@src/client/redux/actions/action-creators';
+import { SEND_QUIT_ROOM, SEND_START_GAME, SEND_MOVE_PIECE, SEND_JOIN_ROOM } from '@src/client/redux/actions/action-creators';
 import routes from '../config/routes';
 import { IDataState } from '../redux/reducer';
-import { placePiece, ENUM_PIECES_MOVE, ENUM_PIECES } from '@src/common/grid-piece-handler';
+import { placePiece, ENUM_PIECES_MOVE, ENUM_PIECES, placePiecePreview } from '@src/common/grid-piece-handler';
 
 import { Modal } from './Modal'
 import { Opponents } from './Opponents';
@@ -40,6 +40,7 @@ const initPreviewGrid = (): ENUM_PIECES[][] => {
 };
 
 export const Game = () => {
+  // const [errorMsg, setErrorMsg] = useState('')
   const [endGameModal, showEndGameModal] = useState(false)
   const history = useHistory();
   const { roomName } = useParams();
@@ -130,21 +131,22 @@ export const Game = () => {
       const curPlayer = roomName.split('[')[1].substr(0, roomName.split('[')[1].length - 1)
       if (!player && curRoom && curPlayer) {
         dispatch(SEND_JOIN_ROOM(curPlayer, curRoom));
+        return
       }
     }
   }, [roomName, player]);
 
-  useEffect(() => {
-    if (!errorMsg) {
-      dispatch(ON_CLEAR_ERROR())
-    }
-  }, [errorMsg])
-
   if (errorMsg) {
     return (
       <div className="splash-container">
-        <div className="game-page">
-          <h1>{errorMsg}</h1>
+        <div className="splash">
+          <div className="game-page" style={{
+            flexDirection: 'column',
+            alignItems: 'center'
+          }}>
+            <h1 style={{ textAlign: 'center' }}>{errorMsg}</h1>
+            <Link to={routes.index} className="home-btn">Home</Link>
+          </div>
         </div>
       </div>
     )
@@ -152,15 +154,20 @@ export const Game = () => {
 
   if (player === undefined) {
     return (
-      <div className="column">
-        Waiting server ...
+      <div className="splash-container">
+        <div className="splash">
+          <div className="game-page">
+            Waiting server ...
+          </div>
+        </div>
       </div>
     );
   }
 
   const renderGrid = (): React.ReactNode[] | null => {
     if (grid) {
-      const gridWithPiece = playing ? placePiece(grid, player.flow[0], player.posPiece) : grid
+      const { flow, posPiece } = player
+      const gridWithPiece = playing ? placePiece(placePiecePreview(grid, flow[0], posPiece), flow[0], posPiece) : grid
       const fieldToRender = gridWithPiece.slice(4)
       return fieldToRender.map((line: number[], i: number) =>
         <div key={i} className="row">

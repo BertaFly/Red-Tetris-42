@@ -11,9 +11,9 @@ import {
 import { IRoomState } from '@src/common/ITypeRoomManager';
 import {
   ENUM_SOCKET_EVENT_CLIENT,
-  EnumError,
-  IEventClientSetError,
   IEventClientSetRoomState,
+  IEventClientSetError,
+  EnumError,
 } from '@src/common/socketEventClient';
 import { updateWin } from './updateWin';
 import { Piece } from './Piece';
@@ -54,8 +54,20 @@ const reducerAddPlayer = (
 ): IRoomState => {
 
   const { playerName, socket } = action;
+  const { players, playing } = state
 
-  const hasPlayerName = state.players.some((p) => p.playerName === playerName);
+  console.log(`players ${players}, playing ${playing}`)
+  if (playing) {
+    const toSend: IEventClientSetError = {
+      error_type: EnumError.PLAYER_SAME_NAME,
+      msg: 'You are not allowed to join the game in progress. Please select another room or try later',
+    };
+
+    socket.emit(ENUM_SOCKET_EVENT_CLIENT.SET_ERROR, toSend);
+    return state;
+  }
+
+  const hasPlayerName = players.some((p) => p.playerName === playerName);
   if (hasPlayerName) {
     const toSend: IEventClientSetError = {
       error_type: EnumError.PLAYER_SAME_NAME,
@@ -65,6 +77,8 @@ const reducerAddPlayer = (
     socket.emit(ENUM_SOCKET_EVENT_CLIENT.SET_ERROR, toSend);
     return state;
   }
+
+  socket.emit(ENUM_SOCKET_EVENT_CLIENT.CLEAR_ERROR)
 
   const isMaster = state.players.length === 0;
   const player = Player.newPlayer(playerName, socket, isMaster, GRID_HEIGHT);

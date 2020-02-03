@@ -253,6 +253,7 @@ body {
   background-color: #e74c3c;
 }
 
+// penalty line
 .color-8 {
   box-sizing: border-box;
 
@@ -260,6 +261,7 @@ body {
   background-color: #34495e;
 }
 
+// preview
 .color-9 {
   box-sizing: border-box;
 
@@ -272,28 +274,6 @@ body {
 
   border: solid #888888;
   background-color: #777777;
-}
-
-.color-11 {
-  box-sizing: border-box;
-
-  border: solid #594A56;
-  background-color: #4D3E50;
-}
-
-.color-12 {
-  box-sizing: border-box;
-
-  border: solid #596A56;
-  background-color: #4D5E50;
-}
-
-// preview
-.color13 {
-  box-sizing: border-box;
-
-  background-color: #838e95;
-  border: 1px solid #5e686e;
 }
 
 .audio {
@@ -356,7 +336,7 @@ body {
 }
 
 .opponents {
-  margin-top: 1rem;
+  margin: 1rem 0;
 
   .game-page {
     flex-wrap: wrap;
@@ -374,6 +354,19 @@ body {
 
   p {
     margin: 0;
+  }
+}
+
+.home-btn {
+  padding: 0.5rem;
+  border-radius: 4px;
+  border: none;
+  background: #95a5a6;
+  color: #2c3e50;
+  text-decoration: none;
+
+  &:visited {
+    color: inherit;
   }
 }
 

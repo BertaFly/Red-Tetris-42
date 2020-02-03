@@ -10,7 +10,7 @@ import {
   ON_SET_ERROR,
   ON_SET_ROOM_STATE,
   ON_SET_ROOMS_PLAYERS_NAME,
-  ReduxAction, REFRESH
+  ReduxAction, REFRESH, ON_CLEAR_ERROR
 } from "@src/client/redux/actions/action-creators";
 import { IDataState } from "@src/client/redux/reducer";
 
@@ -37,10 +37,16 @@ const cbSetError = (
 ) => (
   arg: IEventClientSetError,
   ) => {
-    console.log(ENUM_SOCKET_EVENT_CLIENT.SET_ROOMS_PLAYERS_NAME, arg);
+    console.log(ENUM_SOCKET_EVENT_CLIENT.SET_ERROR, arg);
 
     dispatch(ON_SET_ERROR(arg));
   };
+
+const cbClearError = (dispatch: Dispatch<ReduxAction>) => () => {
+  console.log(ENUM_SOCKET_EVENT_CLIENT.CLEAR_ERROR);
+
+  dispatch(ON_CLEAR_ERROR())
+}
 
 const cbSetRoomsPlayersName = (
   dispatch: Dispatch<ReduxAction>,
@@ -62,6 +68,7 @@ const onAll = (store: Store<IDataState>) => () => {
   socket.on(ENUM_SOCKET_EVENT_CLIENT.SET_ROOM_STATE, cbSetRoomState(dispatch));
   socket.on(ENUM_SOCKET_EVENT_CLIENT.SET_ROOMS_PLAYERS_NAME, cbSetRoomsPlayersName(dispatch));
   socket.on(ENUM_SOCKET_EVENT_CLIENT.SET_ERROR, cbSetError(dispatch));
+  socket.on(ENUM_SOCKET_EVENT_CLIENT.CLEAR_ERROR, cbClearError(dispatch))
 };
 
 export {
@@ -70,4 +77,5 @@ export {
   cbOnConnection,
   cbSetError,
   cbSetRoomsPlayersName,
+  cbClearError,
 };

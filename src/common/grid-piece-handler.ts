@@ -21,10 +21,6 @@ enum ENUM_PIECES {
   n7 = 7,
   wall,
   preview,
-  wall_malus,
-  wall_loose,
-  wall_win,
-  wall_spect,
 }
 
 enum ENUM_PIECES_MOVE {
@@ -202,14 +198,14 @@ const updatePiecePos = (grid: ENUM_PIECES[][], posPiece: IPos, piece: IPiece, mo
   return { piecePlaced: false, pos: posPiece, piece };
 }
 
-const placePiece = (grid: ENUM_PIECES[][], piece: IPiece, pos: IPos): ENUM_PIECES[][] => {
+const placePiece = (grid: ENUM_PIECES[][], piece: IPiece, pos: IPos, isPreview = false): ENUM_PIECES[][] => {
   const pieceDescr = getPiece(piece.num, piece.rot);
 
-  return grid.map((line, y) => line.map((nb, x) => {
+  return grid.map((line, y) => line.map((element, x) => {
     if (y >= pos.y && x >= pos.x && y < pos.y + pieceDescr.length && x < pos.x + pieceDescr.length && pieceDescr[y - pos.y][x - pos.x] !== 0) {
-      return pieceDescr[y - pos.y][x - pos.x];
+      return isPreview ? ENUM_PIECES.preview : pieceDescr[y - pos.y][x - pos.x];
     }
-    return nb
+    return element
   }))
 
 }
@@ -346,6 +342,20 @@ const moveHandler = (players: IPlayer[], move: ENUM_PIECES_MOVE, socketId: strin
     } : person;
   })
 }
+
+const placePiecePreview = (grid: ENUM_PIECES[][], piece: IPiece, pos: IPos): ENUM_PIECES[][] => {
+  const pieceDescr = getPiece(piece.num, piece.rot);
+  let loc = pos;
+
+  // change y pos while not faced with obstacle
+  while (!hasCollision(grid, pieceDescr, loc)) {
+    loc = { ...loc, y: loc.y + 1 };
+  }
+  if (loc.y > 0) {
+    loc = { ...loc, y: loc.y - 1 };
+  }
+  return placePiece(grid, piece, loc, true);
+};
 
 interface IPieceInfo {
   readonly x: number,
@@ -613,4 +623,5 @@ export {
   ENUM_PIECES_MOVE,
   moveHandler,
   placePiece,
+  placePiecePreview,
 };

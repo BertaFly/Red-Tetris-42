@@ -23,6 +23,7 @@ interface IRoomStateClient {
 // SET_ERROR
 enum EnumError {
   PLAYER_SAME_NAME,
+  PLAYING,
 }
 
 interface IEventClientSetError {
@@ -38,6 +39,7 @@ enum ENUM_SOCKET_EVENT_CLIENT {
   SET_ROOM_STATE = 'SET_ROOM_STATE',
   SET_ROOMS_PLAYERS_NAME = 'SET_ROOMS_PLAYERS_NAME',
   SET_ERROR = 'SET_ERROR',
+  CLEAR_ERROR = 'CLEAR_ERROR',
 }
 
 // SET_ROOMS_PLAYERS_NAME

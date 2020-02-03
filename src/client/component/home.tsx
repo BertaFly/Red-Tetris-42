@@ -7,7 +7,7 @@ import routes from '@src/client/config/routes';
 import { IRoomPlayersName } from '@src/common/socketEventClient';
 
 import { IDataState } from '../redux/reducer';
-import { SEND_SUB_ROOMS_PLAYERS_NAME, SEND_UN_SUB_ROOMS_PLAYERS_NAME, SEND_JOIN_ROOM } from '../redux/actions/action-creators';
+import { SEND_SUB_ROOMS_PLAYERS_NAME, SEND_UN_SUB_ROOMS_PLAYERS_NAME } from '../redux/actions/action-creators';
 
 type Error = {
   field: string
@@ -93,7 +93,6 @@ export const Home = () => {
   const onSubmit = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
 
-    dispatch(SEND_JOIN_ROOM(playerName, roomName));
     history.push(generatePath(`${routes.game}[${playerName}]`, { roomName }))
   }
 
