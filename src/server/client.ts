@@ -89,7 +89,6 @@ const handleClient = (socket: Socket) => {
   })
 
   socket.on(ENUM_SOCKET_EVENT_SERVER.MOVE_PIECE, (arg: IEventServerMovePiece) => {
-    console.log('back catch move', arg);
     const { roomName, move } = arg
     gamesDispatcher.dispatch({
       roomName,

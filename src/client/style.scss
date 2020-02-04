@@ -294,6 +294,7 @@ body {
 .modal-main {
   position: fixed;
   background: white;
+  min-width: 320px;
   width: 25%;
   height: auto;
   top:50%;

@@ -156,6 +156,7 @@ const reducerStartGame = (state: IRoomState): IRoomState => {
       flow: flow,
       win: false,
       lost: false,
+      gameOver: false,
       score: 0,
       nbLineCompleted: 0,
       posPiece: initPose(),
