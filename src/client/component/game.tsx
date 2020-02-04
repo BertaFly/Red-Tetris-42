@@ -41,7 +41,6 @@ const initPreviewGrid = (): ENUM_PIECES[][] => {
 };
 
 export const Game = () => {
-  // const [errorMsg, setErrorMsg] = useState('')
   const [endGameModal, showEndGameModal] = useState(false)
   const history = useHistory();
   const { roomName } = useParams();
@@ -252,7 +251,15 @@ export const Game = () => {
 
       <audio controls={true} loop={true} autoPlay={false} src={mp3} className="audio" />
 
-      <Modal show={endGameModal} onClose={() => showEndGameModal(false)} isWin={player.win}>
+      <Modal show={player.gameOver && !player.win && !player.lost} onClose={() => history.push(routes.index)}>
+        <>
+          <h2>Game over</h2>
+          <p>Please waite untill all players finish to know who is the winner.</p>
+          <p>Your exit will automatically cause a defeat and you will be redirected to the home screen.</p>
+        </>
+      </Modal>
+
+      <Modal show={endGameModal} onClose={() => showEndGameModal(false)} isWin={player.win ? 'win' : 'lost'}>
         {player.win ? (<>
           <h2>Congratulations</h2>
           <p>You win</p>

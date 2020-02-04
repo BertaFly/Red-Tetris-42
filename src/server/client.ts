@@ -31,7 +31,7 @@ const handleClient = (socket: Socket) => {
   });
 
   socket.on(ENUM_SOCKET_EVENT_SERVER.SUB_ROOMS_PLAYERS_NAME, (arg: IEventServerSubRoomsPlayersName) => {
-    // console.log(ENUM_SOCKET_EVENT_SERVER.SUB_ROOMS_PLAYERS_NAME, arg);
+    console.log(ENUM_SOCKET_EVENT_SERVER.SUB_ROOMS_PLAYERS_NAME, arg);
 
     if (subRoomsPlayersName && !subRoomsPlayersName.closed) {
       return

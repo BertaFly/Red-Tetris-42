@@ -16,6 +16,7 @@ class Player {
       playing: false,
       win: false,
       lost: false,
+      gameOver: false,
       isMaster: isMaster,
       flow: [],
       posPiece: initPose(),

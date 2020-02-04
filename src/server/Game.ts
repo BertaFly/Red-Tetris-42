@@ -56,7 +56,6 @@ const reducerAddPlayer = (
   const { playerName, socket } = action;
   const { players, playing } = state
 
-  console.log(`players ${players}, playing ${playing}`)
   if (playing) {
     const toSend: IEventClientSetError = {
       error_type: EnumError.PLAYER_SAME_NAME,
@@ -193,8 +192,8 @@ const reducerMovePiece = (state: IRoomState, action: IActionMovePiece): IRoomSta
     if (p.grid[3].some((pi) => pi !== ENUM_PIECES.empty)) {
       return {
         ...p,
-        lost: true,
         playing: false,
+        gameOver: true,
       };
     }
     return p;
@@ -272,6 +271,7 @@ class Game {
         sendSetRoomState(p.socket, ToSend);
       });
     });
+
     this.intervalDownPiece = setInterval(() => {
       this.state.players.forEach((p) => {
         if (p.playing) {

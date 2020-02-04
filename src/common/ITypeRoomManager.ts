@@ -12,6 +12,7 @@ interface IPlayer {
   readonly playing: boolean;
   readonly win: boolean;
   readonly lost: boolean;
+  readonly gameOver: boolean;
   readonly flow: IPiece[];
   readonly posPiece: IPos;
   readonly isMaster: boolean;
