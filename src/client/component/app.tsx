@@ -28,7 +28,7 @@ const App = () => {
   }
 
   return (
-    <HashRouter hashType="noslash">
+    <HashRouter hashType="noslash" basename="/Red-Tetris-42">
       <Switch>
         <Route exact path={routes.index} component={Home} />
         <Route exact path={routes.game} component={Game} />

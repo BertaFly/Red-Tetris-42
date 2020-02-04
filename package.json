@@ -7,7 +7,11 @@
     "client-dev": "webpack-dev-server --mode development",
     "client-build": "webpack ./src/client/index.tsx ",
     "srv-dev": "nodemon --exec ts-node -r tsconfig-paths/register ./src/server/main.ts",
-    "srv-build": "npm run client-build && ts-node -r tsconfig-paths/register ./src/server/main.ts"
+    "srv-build": "npm run client-build && ts-node -r tsconfig-paths/register ./src/server/main.ts",
+    "test-client": "mocha -r ts-node/register -r tsconfig-paths/register test/client/**/*.test.ts",
+    "test-all": "npm run test-client",
+    "coverage": "nyc npm run test-all",
+    "deploy": "gh-pages -d build"
   },
   "nyc": {
     "extension": [
