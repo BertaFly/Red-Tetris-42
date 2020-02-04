@@ -313,4 +313,5 @@ export {
   DEL_PLAYER,
   START_GAME,
   MOVE_PIECE,
+  EnumActionRoomStore,
 };
