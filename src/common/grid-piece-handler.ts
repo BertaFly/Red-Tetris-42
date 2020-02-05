@@ -631,4 +631,5 @@ export {
   updatePiecePosOnRot,
   GRID_WIDTH,
   gridAddWall,
+  gridDelLine,
 };

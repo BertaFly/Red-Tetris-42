@@ -14,7 +14,8 @@ import {
   gridAddWall,
   placePiecePreview,
   placePiece,
-  moveCollision
+  moveCollision,
+  gridDelLine
 } from '../../src/common/grid-piece-handler';
 
 it('getPiece', () => {
@@ -117,7 +118,14 @@ it('placePiece', () => {
 })
 
 it('gridDelLine', () => {
+  const gridWithLine = gridInit()
+  gridWithLine.splice(23, 1, Array(GRID_WIDTH).fill(ENUM_PIECES.n1))
 
+  expect(gridDelLine(gridWithLine)).toStrictEqual({ grid: gridInit(), nbLineToAdd: 1 })
+
+  const gridLineWall = gridInit()
+  gridLineWall.splice(21, 3, Array(GRID_WIDTH).fill(ENUM_PIECES.n1), Array(GRID_WIDTH).fill(ENUM_PIECES.n1), Array(GRID_WIDTH).fill(ENUM_PIECES.wall))
+  expect(gridDelLine(gridLineWall)).toStrictEqual({ grid: gridInit(), nbLineToAdd: 2 })
 })
 
 // updatePiecePos
