@@ -69,7 +69,7 @@ const initPose = () => {
 
 const getPiece = (pieces: ENUM_PIECES, rot = 0): ENUM_PIECES[][] => PIECES_DESCR[pieces - 1][rot].piece;
 
-const calScore = (nbLine: number): number => {
+const calcScore = (nbLine: number): number => {
   if (nbLine <= 0) {
     return 0;
   }
@@ -323,12 +323,12 @@ const moveHandler = (players: IPlayer[], move: ENUM_PIECES_MOVE, socketId: strin
 
   const { grid, nbLineToAdd } = gridDelLine(newPlayer.grid);
   const { score, nbLineCompleted } = newPlayer
-  const scoreToAdd = calScore(nbLineToAdd)
+  const scoreToAdd = calcScore(nbLineToAdd)
 
   // update score
   newPlayer = {
     ...newPlayer,
-    score: score + scoreToAdd,
+    score: nbLineCompleted >= 0 ? score + scoreToAdd : score,
     nbLineCompleted: nbLineCompleted + nbLineToAdd,
     grid,
   };
@@ -340,7 +340,6 @@ const moveHandler = (players: IPlayer[], move: ENUM_PIECES_MOVE, socketId: strin
     }
     return nbLineToAdd ? {
       ...person,
-      score: person.score - scoreToAdd,
       nbLineCompleted: person.nbLineCompleted - nbLineToAdd,
       grid: gridAddWall(person.grid, nbLineToAdd),
       posPiece: moveCollision(person.grid, person.posPiece, person.flow[0])

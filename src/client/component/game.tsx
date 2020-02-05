@@ -194,13 +194,14 @@ export const Game = () => {
       <h1 className="text-center text-white">TETRIS</h1>
       <div className="game-page">
         <div className="left-column">
-          <div className="legend">
-            <span className="">Move right: ➡️</span>
-            <span className="">Move left: ⬅️</span>
-            <span className="">Move down: ⬇️</span>
-            <span className="">Rotate: ⬆️</span>
-            <span className="">Place the piece: space</span>
-            <span className="">Switch the current piece with the next piece: S️</span>
+          <div className="welcome">
+            <span>Welcome <b>{player ? player.playerName : ''}</b>!</span>
+          </div>
+
+          <div className="user-description">
+            <span>
+              You are {isMaster ? 'an Owner of' : 'a Guest in'} this room
+            </span>
           </div>
 
           <div className="game-controlls">
@@ -213,24 +214,29 @@ export const Game = () => {
             }} className="play">Play</button>) : null}
           </div>
 
-          <div className="user-description">
-            <span>
-              Name: <b>{player ? player.playerName : ''}</b>
-            </span>
-            <span>
-              {isMaster ? 'Owner' : 'Guest'}
-            </span>
-            <span>
-              Score: {player ? player.score : ''}
-            </span>
-            <span>
-              Lines completed: {player ? player.nbLineCompleted : ''}
-            </span>
+          <h3 style={{ textAlign: 'center' }}>Instructions</h3>
+          <div className="legend">
+            <span className="">Move right: ➡️</span>
+            <span className="">Move left: ⬅️</span>
+            <span className="">Move down: ⬇️</span>
+            <span className="">Rotate: ⬆️</span>
+            <span className="">Place a piece: space</span>
+            <span className="">Switch a piece: S️</span>
+            <span className="instructions">Once your opponent complete a line you will get -line and a penalty line at bottom, but you can reduce it by complete a line on your side</span>
+            <span>1 line - 20</span>
+            <span>2 line - 40</span>
+            <span>3 line - 80</span>
+            <span>4 line - 160</span>
           </div>
+
+          <span style={{ marginTop: '0.5rem', display: 'block' }}>
+            Lines completed: {player ? player.nbLineCompleted : ''}
+          </span>
         </div>
         <div className="right-column">
 
           <div className="game-grid">
+            <span className="my-score">Score: {player ? player.score : ''}</span>
             {renderGrid()}
           </div>
 
@@ -249,9 +255,13 @@ export const Game = () => {
         <Opponents players={opponents} />
       ) : null}
 
-      <audio controls={true} loop={true} autoPlay={false} src={mp3} className="audio" />
+      <audio controls={true} loop={true} autoPlay={true} src={mp3} className="audio" />
 
-      <Modal show={player.gameOver && !player.win && !player.lost} onClose={() => history.push(routes.index)}>
+      <Modal show={player.gameOver && !player.win && !player.lost} onClose={() => {
+        dispatch(SEND_QUIT_ROOM())
+        history.push(routes.index)
+      }
+      }>
         <>
           <h2>Game over</h2>
           <p>Please waite untill all players finish to know who is the winner.</p>

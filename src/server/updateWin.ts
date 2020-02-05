@@ -15,6 +15,12 @@ const updateWin = (players: IPlayer[]): IPlayer[] => {
         })
       );
     }
+  } else if (players.length === 1 && !players[0].playing) {
+    return players.map(pl => ({
+      ...pl,
+      win: true,
+      lost: false,
+    }))
   }
 
   return players;

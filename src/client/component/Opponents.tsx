@@ -40,7 +40,7 @@ export const Opponents: React.FC<Props> = ({ players }) => {
             )}
             <p>Name: <b>{competitor.playerName}</b></p>
             {!competitor.playing && (competitor.win || competitor.lost) ? (
-              <p>{competitor.win ? 'Win' : 'Lose'}</p>
+              <p><b>{competitor.win ? 'Win' : 'Lost'}</b></p>
             ) : null}
             <p>Score: {competitor.score}</p>
             <p>Lines: {competitor.nbLineCompleted}</p>

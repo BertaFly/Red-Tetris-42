@@ -188,7 +188,7 @@ const reducerMovePiece = (state: IRoomState, action: IActionMovePiece): IRoomSta
 
   let newplayers = moveHandler(state.players, move, socketId);
 
-  // update player lost
+  // set for player a game over to check who's won
   newplayers = newplayers.map((p) => {
     if (p.grid[3].some((pi) => pi !== ENUM_PIECES.empty)) {
       return {

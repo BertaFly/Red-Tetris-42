@@ -125,6 +125,17 @@ body {
   margin: auto;
   border-radius: 4px;
 
+  .left-column {
+    max-width: 350px;
+  }
+
+  .welcome {
+    margin-bottom: 0.5rem;
+    display: flex;
+    flex-direction: column;
+    text-align: center;
+  }
+
   .legend {
     display: flex;
     flex-direction: column;
@@ -132,6 +143,10 @@ body {
     border-radius: 4px;
     padding: 1rem;
     background: #ffff;
+  }
+
+  .instructions {
+    margin: 0.5rem 0;
   }
 
   .game-controlls {
@@ -167,6 +182,7 @@ body {
   .user-description {
     display: flex;
     flex-direction: column;
+    text-align: center;
   }
 }
 
@@ -190,6 +206,13 @@ body {
 .preview-grid {
   height: fit-content;
   border: 3px solid #2c3e50;
+}
+
+.my-score {
+  margin-bottom: 0.3rem;
+  text-transform: uppercase;
+  font-weight: 700;
+  color: #d03f2f;
 }
 
 .casePlayer {
@@ -265,7 +288,7 @@ body {
 .color-9 {
   box-sizing: border-box;
 
-  background-color: #838e95;
+  background-color: #9fa7ad;
   border: 1px solid #5e686e;
 }
 
