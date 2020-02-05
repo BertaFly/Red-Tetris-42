@@ -25,7 +25,6 @@ enum ENUM_PIECES {
 
 enum ENUM_PIECES_MOVE {
   ROT_RIGHT = 'ROT_RIGHT',
-  ROT_LEFT = 'ROT_LEFT',
   RIGHT = 'RIGHT',
   LEFT = 'LEFT',
   DOWN = 'DOWN',
@@ -43,11 +42,9 @@ enum ENUM_COLLISION_TYPE {
   WALL_RIGHT = 'collision_wall_right',
   WALL_LEFT = 'collision_wall_left',
   WALL_BOTTOM = 'collision_wall_bottom',
-  WALL_TOP = 'collision_top',
 }
 
 const PRIO_COLLISION = [
-  ENUM_COLLISION_TYPE.WALL_TOP,
   ENUM_COLLISION_TYPE.PIECE,
   ENUM_COLLISION_TYPE.WALL_BOTTOM,
   ENUM_COLLISION_TYPE.WALL_RIGHT,
@@ -112,23 +109,19 @@ const hasCollision = (grid: ENUM_PIECES[][], pieces: ENUM_PIECES[][], loc: IPos)
     const newX = x + loc.x;
     const newY = y + loc.y;
 
-    if (newY < 0 && nb !== 0) {
-      if (comp(collisionType, ENUM_COLLISION_TYPE.WALL_TOP)) {
-        collisionType = ENUM_COLLISION_TYPE.WALL_TOP;
-      }
-    } else if (newY >= grid.length && nb !== 0) {
+    if (newY >= grid.length && nb) {
       if (comp(collisionType, ENUM_COLLISION_TYPE.WALL_BOTTOM)) {
         collisionType = ENUM_COLLISION_TYPE.WALL_BOTTOM;
       }
-    } else if (newX < 0 && nb !== 0) {
+    } else if (newX < 0 && nb) {
       if (comp(collisionType, ENUM_COLLISION_TYPE.WALL_LEFT)) {
         collisionType = ENUM_COLLISION_TYPE.WALL_LEFT;
       }
-    } else if (newX >= GRID_WIDTH && nb !== 0) {
+    } else if (newX >= GRID_WIDTH && nb) {
       if (comp(collisionType, ENUM_COLLISION_TYPE.WALL_RIGHT)) {
         collisionType = ENUM_COLLISION_TYPE.WALL_RIGHT;
       }
-    } else if (nb !== 0 && grid[newY][newX] !== 0) {
+    } else if (nb && grid[newY][newX]) {
       if (comp(collisionType, ENUM_COLLISION_TYPE.PIECE)) {
         collisionType = ENUM_COLLISION_TYPE.PIECE;
       }
@@ -220,7 +213,7 @@ const moveCollision = (
   let collisionType = hasCollision(grid, newPieceDescr, posPiece);
 
   let newPos = posPiece;
-  while (collisionType !== undefined && collisionType !== ENUM_COLLISION_TYPE.WALL_TOP) {
+  while (collisionType) {
     newPos = {
       ...newPos,
       ...(collisionType === ENUM_COLLISION_TYPE.WALL_LEFT ? { x: newPos.x + 1 } :
@@ -628,4 +621,14 @@ export {
   moveHandler,
   placePiece,
   placePiecePreview,
+  getPiece,
+  calcScore,
+  movePose,
+  hasCollision,
+  moveCollision,
+  PIECES_DESCR,
+  ENUM_COLLISION_TYPE,
+  updatePiecePosOnRot,
+  GRID_WIDTH,
+  gridAddWall,
 };

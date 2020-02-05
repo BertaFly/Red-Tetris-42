@@ -58,7 +58,7 @@ const reducerAddPlayer = (
 
   if (playing) {
     const toSend: IEventClientSetError = {
-      error_type: EnumError.PLAYER_SAME_NAME,
+      error_type: EnumError.PLAYING,
       msg: 'You are not allowed to join the game in progress. Please select another room or try later',
     };
 

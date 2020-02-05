@@ -8,24 +8,9 @@
     "client-build": "webpack ./src/client/index.tsx ",
     "srv-dev": "nodemon --exec ts-node -r tsconfig-paths/register ./src/server/main.ts",
     "srv-build": "npm run client-build && ts-node -r tsconfig-paths/register ./src/server/main.ts",
-    "test-client": "mocha -r ts-node/register -r tsconfig-paths/register test/client/**/*.test.ts",
-    "test-all": "npm run test-client",
     "coverage": "nyc npm run test-all",
-    "deploy": "gh-pages -d build"
-  },
-  "nyc": {
-    "extension": [
-      ".ts",
-      ".tsx"
-    ],
-    "include": [
-      "src/**/*.ts",
-      "src/**/*.tsx"
-    ],
-    "reporter": [
-      "html"
-    ],
-    "all": true
+    "deploy": "gh-pages -d build",
+    "test:ci": "jest --coverage"
   },
   "keywords": [],
   "author": "inovykov",
@@ -71,9 +56,12 @@
     "webpack-dev-server": "^3.7.2"
   },
   "devDependencies": {
+    "@babel/code-frame": "^7.8.3",
     "@babel/core": "^7.6.0",
     "@babel/preset-env": "^7.6.0",
     "@types/chai": "^4.2.1",
+    "@types/enzyme": "^3.10.4",
+    "@types/jest": "^25.1.1",
     "@types/mocha": "^5.2.7",
     "babel-cli": "^6.26.0",
     "babel-watch": "^7.0.0",
@@ -81,18 +69,48 @@
     "chai-as-promised": "^5.3.0",
     "chai-equal-jsx": "^1.0.9",
     "css-loader": "^0.28.11",
+    "enzyme": "^3.11.0",
     "file-loader": "^1.1.11",
     "gh-pages": "^1.2.0",
     "ignore-styles": "^5.0.1",
+    "jest": "^25.1.0",
     "jsdom": "^11.12.0",
     "jsdom-global": "^3.0.2",
     "mocha": "^5.2.0",
     "nyc": "^13.3.0",
+    "react-test-renderer": "^16.12.0",
     "style-loader": "^0.20.3",
+    "ts-jest": "^25.2.0",
     "ts-node": "^7.0.1",
     "tsconfig-paths": "^3.8.0",
     "tsconfig-paths-webpack-plugin": "^3.2.0",
     "tslint": "^5.19.0",
     "tslint-react": "^3.6.0"
+  },
+  "jest": {
+    "transform": {
+      ".(ts|tsx)": "ts-jest"
+    },
+    "testRegex": "(/__tests__/.*|\\.(test|spec))\\.(ts|tsx|js)$",
+    "moduleFileExtensions": [
+      "ts",
+      "tsx",
+      "js"
+    ],
+    "moduleNameMapper": {
+      "@src/(.*)$": "<rootDir>/src/$1"
+    },
+    "coverageReporters": [
+      "json",
+      "html"
+    ],
+    "coverageThreshold": {
+      "global": {
+        "branches": 70,
+        "functions": 70,
+        "lines": 70,
+        "statements": 70
+      }
+    }
   }
 }

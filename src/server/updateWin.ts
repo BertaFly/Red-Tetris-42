@@ -18,8 +18,8 @@ const updateWin = (players: IPlayer[]): IPlayer[] => {
   } else if (players.length === 1 && !players[0].playing) {
     return players.map(pl => ({
       ...pl,
-      win: true,
-      lost: false,
+      win: Boolean(pl.score),
+      lost: !Boolean(pl.score),
     }))
   }
 
