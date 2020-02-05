@@ -1,6 +1,6 @@
 # Red-Tetris-42
 
-This is a project for Unit Factory, aka Schgool 42.
+This is a project for Unit Factory, aka School 42.
 
 # Technologies:
 TypeScript, React, Redux, Node, Socket.io, SCSS.
@@ -11,10 +11,11 @@ In separate terminal windows run `npm run srv-dev`, `npm run client-dev`
 ## Summury
 This is a classic tetris game.
 To play you need create a room.
+Be carefull, music will play loud once you enter the room.
 Other users can join to your room, if a player name is uniq and a game hasn't started.
 
-Once you complete a line, your score will be incleased, unless you have positive lines completed count.
-Simultaniously completed lines will give you:
+Once you complete a line, your score will be increased, unless you have positive lines completed count.
+Simultaneously completed lines will give you:
 1 line - 20 points
 2 lines - 40 points
 3 lines - 80 points

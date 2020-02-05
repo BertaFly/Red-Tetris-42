@@ -410,6 +410,16 @@ body {
   z-index: 0;
 }
 
+.author {
+  position: fixed;
+  display: block;
+  right: 10px;
+  bottom: 10px;
+  padding: 0.25rem;
+  background: rgba(238, 238, 238, 0.5);
+  border-radius: 4px;
+}
+
 @media (min-width: 48em) {
   .splash {
       width: 50%;

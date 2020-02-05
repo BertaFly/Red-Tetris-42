@@ -257,6 +257,8 @@ export const Game = () => {
 
       <audio controls={true} loop={true} autoPlay={true} src={mp3} className="audio" />
 
+      <span className="author">If you ❤️, pls give a 🌟 on the <a href="https://github.com/BertaFly/Red-Tetris-42" target="_blanck">github</a>😉</span>
+
       <Modal show={player.gameOver && !player.win && !player.lost} onClose={() => {
         dispatch(SEND_QUIT_ROOM())
         history.push(routes.index)
