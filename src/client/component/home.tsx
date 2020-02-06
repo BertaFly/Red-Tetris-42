@@ -59,6 +59,8 @@ export const Home = () => {
       setErrors((prevErrors) => [...(errors.every(err => err.field !== field) ? prevErrors : prevErrors.filter(e => e.field !== field)), { field: field, msg: 'This field is required' }])
     } else if (value.length < 3) {
       setErrors((prevErrors) => [...(errors.every(err => err.field !== field) ? prevErrors : prevErrors.filter(e => e.field !== field)), { field: field, msg: `${field} length should have at least 3 letters` }])
+    } else if (value.length > 20) {
+      setErrors((prevErrors) => [...(errors.every(err => err.field !== field) ? prevErrors : prevErrors.filter(e => e.field !== field)), { field: field, msg: `${field} length should be less than 20 letters` }])
     } else {
       setErrors((prevErrors) => checkOcupiedNames() ? [...prevErrors, { field: field, msg: `Entered player name has already taken in the '${roomName}'. Change room or player` }] : prevErrors.filter(error => error.field !== field))
     }
@@ -109,14 +111,14 @@ export const Home = () => {
             <label htmlFor="roomName">Room name *</label>
             <input id="roomName" type="text" placeholder="Room name" value={roomName} name="Room name" onChange={onChange} onBlur={(e: React.ChangeEvent<HTMLInputElement>) => {
               validateInput('Room name', e.target.value)
-            }} title="This is a required field. At least 3 letters" />
+            }} title="This is a required field. At least 3 letters" maxLength={20} />
             {getRoomError() && (<span className="pure-form-message error-text">{getRoomError()}</span>)}
           </div>
           <div className="pure-control-group">
             <label htmlFor="playerName">Player name *</label>
             <input id="playerName" type="text" placeholder="Player name" name="Player name" value={playerName} onChange={onChange} onBlur={(e: React.ChangeEvent<HTMLInputElement>) => {
               validateInput('Player name', e.target.value)
-            }} title="This is a required field. At least 3 letters" />
+            }} title="This is a required field. At least 3 letters" maxLength={20} />
             {getPlayerError() && (<span className="pure-form-message error-text">{getPlayerError()}</span>)}
           </div>
           <div className="pure-controls">
