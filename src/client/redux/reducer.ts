@@ -77,4 +77,5 @@ export {
   reducer,
   EnumAction,
   IDataState,
+  initApp,
 };

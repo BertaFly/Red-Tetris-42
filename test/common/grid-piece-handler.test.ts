@@ -15,7 +15,8 @@ import {
   placePiecePreview,
   placePiece,
   moveCollision,
-  gridDelLine
+  gridDelLine,
+  updatePiecePos
 } from '../../src/common/grid-piece-handler';
 
 it('getPiece', () => {
@@ -128,6 +129,23 @@ it('gridDelLine', () => {
   expect(gridDelLine(gridLineWall)).toStrictEqual({ grid: gridInit(), nbLineToAdd: 2 })
 })
 
-// updatePiecePos
+it('updatePiecePos', () => {
+  expect(updatePiecePos(gridInit(), { x: 0, y: 4 }, { num: ENUM_PIECES.n1, rot: 0 }, ENUM_PIECES_MOVE.ROT_RIGHT).piecePlaced).toBe(false)
+
+  expect(updatePiecePos(gridInit(), { x: 0, y: 4 }, { num: ENUM_PIECES.n1, rot: 0 }, ENUM_PIECES_MOVE.RIGHT).piecePlaced).toBe(false)
+
+  expect(updatePiecePos(gridInit(), { x: 0, y: 4 }, { num: ENUM_PIECES.n1, rot: 0 }, ENUM_PIECES_MOVE.LEFT).pos).toStrictEqual({ x: 0, y: 4 })
+  expect(updatePiecePos(gridInit(), { x: 1, y: 4 }, { num: ENUM_PIECES.n1, rot: 0 }, ENUM_PIECES_MOVE.LEFT).pos).toStrictEqual({ x: 0, y: 4 })
+
+  expect(updatePiecePos(gridInit(), { x: 0, y: 4 }, { num: ENUM_PIECES.n1, rot: 0 }, ENUM_PIECES_MOVE.DROP).piecePlaced).toBe(true)
+
+  expect(updatePiecePos(gridInit(), { x: 0, y: 4 }, { num: ENUM_PIECES.n1, rot: 0 }, ENUM_PIECES_MOVE.DOWN).piecePlaced).toBe(false)
+
+  const takenGrid = gridInit()
+  takenGrid.splice(22, 2, [0, 0, 0, 4, 4, 0, 0, 0, 0, 0], [0, 0, 0, 4, 4, 0, 0, 0, 0, 0])
+  expect(updatePiecePos(takenGrid, { x: 0, y: 21 }, { num: ENUM_PIECES.n1, rot: 0 }, ENUM_PIECES_MOVE.DOWN).piecePlaced).toBe(true)
+
+  expect(updatePiecePos(gridInit(), { x: 0, y: 4 }, { num: ENUM_PIECES.n1, rot: 0 }, ENUM_PIECES_MOVE.SWITCH).piecePlaced).toBe(false)
+})
 
 // moveHandler

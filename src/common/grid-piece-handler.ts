@@ -632,4 +632,5 @@ export {
   GRID_WIDTH,
   gridAddWall,
   gridDelLine,
+  updatePiecePos,
 };
